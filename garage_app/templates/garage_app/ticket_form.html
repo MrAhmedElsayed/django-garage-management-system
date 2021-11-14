@@ -1,0 +1,90 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'garage_app_Ticket_list' %}">
+    Ticket Listing
+    </a>
+</p>
+    
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.errors}}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="completed">completed: </label>
+  <input class="form-control col-sm-10" id="completed" type="text" name="completed" value="{{ object.completed }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="national_identification_number">national_identification_number: </label>
+  <input class="form-control col-sm-10" id="national_identification_number" type="text" name="national_identification_number" value="{{ object.national_identification_number }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="created">created: </label>
+  <input class="form-control col-sm-10" id="created" type="datetime-local" name="created" value="{{ object.created }}" disabled>
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="ticket_total_price">ticket_total_price: </label>
+  <input class="form-control col-sm-10" id="ticket_total_price" type="text" name="ticket_total_price" value="{{ object.ticket_total_price }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="parking_price_per_day">parking_price_per_day: </label>
+  <input class="form-control col-sm-10" id="parking_price_per_day" type="text" name="parking_price_per_day" value="{{ object.parking_price_per_day }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="car_color">car_color: </label>
+  <input class="form-control col-sm-10" id="car_color" type="text" name="car_color" value="{{ object.car_color }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="car_owner_name">car_owner_name: </label>
+  <input class="form-control col-sm-10" id="car_owner_name" type="text" name="car_owner_name" value="{{ object.car_owner_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="reservation_time_per_day">reservation_time_per_day: </label>
+  <input class="form-control col-sm-10" id="reservation_time_per_day" type="text" name="reservation_time_per_day" value="{{ object.reservation_time_per_day }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="owner_mobile_number">owner_mobile_number: </label>
+  <input class="form-control col-sm-10" id="owner_mobile_number" type="text" name="owner_mobile_number" value="{{ object.owner_mobile_number }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="car_model_name">car_model_name: </label>
+  <input class="form-control col-sm-10" id="car_model_name" type="text" name="car_model_name" value="{{ object.car_model_name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="position_number">position_number: </label>
+  <input class="form-control col-sm-10" id="position_number" type="number" name="position_number" value="{{ object.position_number }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="last_updated">last_updated: </label>
+  <input class="form-control col-sm-10" id="last_updated" type="datetime-local" name="last_updated" value="{{ object.last_updated }}" disabled>
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="car_model_year">car_model_year: </label>
+  <input class="form-control col-sm-10" id="car_model_year" type="number" name="car_model_year" value="{{ object.car_model_year }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="car_registration_no">car_registration_no: </label>
+  <input class="form-control col-sm-10" id="car_registration_no" type="text" name="car_registration_no" value="{{ object.car_registration_no }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="driver_license_number">driver_license_number: </label>
+  <input class="form-control col-sm-10" id="driver_license_number" type="text" name="driver_license_number" value="{{ object.driver_license_number }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="car_plate">car_plate: </label>
+  <input class="form-control col-sm-10" id="car_plate" type="text" name="car_plate" value="{{ object.car_plate }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="car_manufacturer">car_manufacturer: </label>
+  <input class="form-control col-sm-10" id="car_manufacturer" type="text" name="car_manufacturer" value="{{ object.car_manufacturer }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="car_chassis_no">car_chassis_no: </label>
+  <input class="form-control col-sm-10" id="car_chassis_no" type="text" name="car_chassis_no" value="{{ object.car_chassis_no }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

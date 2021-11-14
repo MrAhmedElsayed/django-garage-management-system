@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+    <!-- Custom styles for this page -->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">ادارة التذاكر</h1>
+        <a data-toggle="modal" data-target="#createTicketModal" href="javascript:void(0);"
+           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> انشاء تذكرة</a>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <tr>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                        <td>Edinburgh</td>
+                        <td>61</td>
+                        <td>2011/04/25</td>
+                        <td>$320,800</td>
+                    </tr>
+                    <tr>
+                        <td>Garrett Winters</td>
+                        <td>Accountant</td>
+                        <td>Tokyo</td>
+                        <td>63</td>
+                        <td>2011/07/25</td>
+                        <td>$170,750</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- create ticket Modal-->
+    <div class="modal fade" id="createTicketModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content border-left-success">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form method="post">
+                    <div class="modal-body">
+
+                        {% csrf_token %}
+
+                        <label for="id_car_owner_name">اسم المالك:</label>
+                        <input type="text" name="car_owner_name"
+                               maxlength="30" required
+                               id="id_car_owner_name" class="form-control">
+
+                        <label for="id_owner_mobile_number">جوال المالك:</label>
+                        <input type="text"
+                               name="owner_mobile_number"
+                               maxlength="30" required
+                               id="id_owner_mobile_number" class="form-control">
+
+                        <label for="id_national_identification_number">السجل المدني:</label>
+                        <input type="text"
+                               name="national_identification_number"
+                               maxlength="30"
+                               required
+                               id="id_national_identification_number" class="form-control">
+
+                        <label for="id_driver_license_number">رقم الرخصة:</label>
+                        <input type="text"
+                               name="driver_license_number"
+                               maxlength="30" required
+                               id="id_driver_license_number" class="form-control">
+
+                        <label for="id_car_model_year">موديل السيارة:</label>
+                        <input type="number"
+                               name="car_model_year" required
+                               id="id_car_model_year" class="form-control">
+                        <label for="id_car_registration_no">رقم اللوحة:</label>
+                        <input type="text"
+                               name="car_registration_no"
+                               maxlength="30" required
+                               id="id_car_registration_no" class="form-control">
+
+                        <label for="id_car_model_name">اسم الموديل:</label>
+                        <input type="text" name="car_model_name"
+                               maxlength="30" required
+                               id="id_car_model_name" class="form-control">
+                        <label for="id_car_plate">رقم اللوحة:</label>
+                        <input type="text" name="car_plate"
+                               maxlength="30" required
+                               id="id_car_plate" class="form-control">
+                        <label for="id_car_manufacturer">الشركة المصنعة:</label>
+                        <input type="text"
+                               name="car_manufacturer"
+                               maxlength="30" required
+                               id="id_car_manufacturer" class="form-control">
+                        <label for="id_car_chassis_no">رقم الشاسيه:</label>
+                        <input type="text" name="car_chassis_no"
+                               maxlength="30" required
+                               id="id_car_chassis_no" class="form-control">
+                        <label for="id_car_color">لون السيارة:</label>
+                        <input type="text" name="car_color"
+                               maxlength="30" required
+                               id="id_car_color" class="form-control">
+                        <label for="id_reservation_time_per_day">ايام الحجز:</label>
+                        <input type="text"
+                               name="reservation_time_per_day"
+                               maxlength="30" required
+                               id="id_reservation_time_per_day" class="form-control">
+
+                        <label for="id_ticket_total_price">اجمالي التذكرة:</label>
+                        <input type="number"
+                               name="ticket_total_price"
+                               step="0.01" required
+                               id="id_ticket_total_price" class="form-control">
+
+                        <label for="id_parking_price_per_day">سعر اليوم:</label>
+                        <input type="number"
+                               name="parking_price_per_day"
+                               step="0.01" required
+                               id="id_parking_price_per_day" class="form-control">
+
+                        <label for="id_completed">منتهية:</label>
+                        <input type="checkbox" name="completed"
+                               id="id_completed" class="form-control">
+                        <label for="id_position_number">رقم حارة الركن:</label>
+                        <input type="number"
+                               name="position_number"
+                               value="1" required
+                               id="id_position_number" class="form-control">
+                        <label for="id_employee">الموظف:</label>
+                        <select name="employee" required id="id_employee">
+                            <option value="" selected>---------</option>
+                            <option value="1">admin</option>
+                        </select>
+
+
+                        <div class="d-flex justify-content-center"
+                             style="position: absolute; right: 40%; top: 40%; z-index: 4">
+                            <div class="spinner-border text-success" role="status" style="width: 6rem; height: 6rem;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Email</label>
+                                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Password</label>
+                                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputAddress">Address</label>
+                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputAddress2">Address 2</label>
+                            <input type="text" class="form-control" id="inputAddress2"
+                                   placeholder="Apartment, studio, or floor">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputCity">City</label>
+                                <input type="text" class="form-control" id="inputCity">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputState">State</label>
+                                <select id="inputState" class="form-control">
+                                    <option selected>Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="inputZip">Zip</label>
+                                <input type="text" class="form-control" id="inputZip">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">
+                                    Check me out
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="submit">Logout</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+{% endblock %}
