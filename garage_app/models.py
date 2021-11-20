@@ -27,7 +27,6 @@ class Ticket(Timestamp):
     car_model_year = models.IntegerField(verbose_name='موديل السيارة')
     car_registration_no = models.CharField(max_length=30, verbose_name='رقم اللوحة')
     car_model_name = models.CharField(max_length=30, verbose_name='اسم الموديل')
-    car_plate = models.CharField(max_length=30, verbose_name='رقم اللوحة')
     car_manufacturer = models.CharField(max_length=30, verbose_name='الشركة المصنعة')
     car_chassis_no = models.CharField(max_length=30, verbose_name='رقم الشاسيه')
     car_color = models.CharField(max_length=30, verbose_name='لون السيارة')
@@ -37,7 +36,7 @@ class Ticket(Timestamp):
     ticket_total_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='اجمالي التذكرة')
     parking_price_per_day = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='سعر اليوم')
     completed = models.BooleanField(default=False, verbose_name='منتهية')
-    position_number = models.IntegerField(default=1, verbose_name='رقم حارة الركن')
+    position_number = models.CharField(max_length=10, verbose_name='رقم حارة الركن')
 
     class Meta:
         pass

@@ -20,7 +20,6 @@ class TicketAdmin(admin.ModelAdmin):
         "car_model_year",
         "car_registration_no",
         "car_model_name",
-        "car_plate",
         "car_manufacturer",
         "car_chassis_no",
         "car_color",

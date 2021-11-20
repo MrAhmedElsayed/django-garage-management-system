@@ -1,90 +1,239 @@
+<!-- create ticket Modal-->
+<div class="modal fade" id="createTicketModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content border-left-success">
+            <form method="post" enctype="multipart/form-data" id="ticket_form">
+                {% csrf_token %}
+                {{ form.errors }}
+                <div class="modal-body">
+                    <div class="col-12 mb-2 mt-2">
+                        <div class="card border-left-primary  h-100 py-1">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="font-weight-bold text-primary text-uppercase mb-1">
+                                            بيانات العميل
+                                        </div>
+                                        <div class="mb-1 mt-2">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-7">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">اسم المالك</span>
+                                                        </div>
+                                                        <input class="form-control" type="text" name="car_owner_name"
+                                                               maxlength="30" required id="id_car_owner_name"
+                                                               placeholder="احمد السيد عبد الباري">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">جوال المالك</span>
+                                                        </div>
+                                                        <input class="form-control" type="text"
+                                                               name="owner_mobile_number" maxlength="30" required
+                                                               id="id_owner_mobile_number" placeholder="0599013431">
+                                                    </div>
+                                                </div>
+                                            </div>
 
-{% extends "base.html" %}
-{% load static %}
-{% block content %}
-    
-<p>
-    <a class="btn btn-light" href="{% url 'garage_app_Ticket_list' %}">
-    Ticket Listing
-    </a>
-</p>
-    
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{form.errors}}
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="completed">completed: </label>
-  <input class="form-control col-sm-10" id="completed" type="text" name="completed" value="{{ object.completed }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="national_identification_number">national_identification_number: </label>
-  <input class="form-control col-sm-10" id="national_identification_number" type="text" name="national_identification_number" value="{{ object.national_identification_number }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="created">created: </label>
-  <input class="form-control col-sm-10" id="created" type="datetime-local" name="created" value="{{ object.created }}" disabled>
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="ticket_total_price">ticket_total_price: </label>
-  <input class="form-control col-sm-10" id="ticket_total_price" type="text" name="ticket_total_price" value="{{ object.ticket_total_price }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="parking_price_per_day">parking_price_per_day: </label>
-  <input class="form-control col-sm-10" id="parking_price_per_day" type="text" name="parking_price_per_day" value="{{ object.parking_price_per_day }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="car_color">car_color: </label>
-  <input class="form-control col-sm-10" id="car_color" type="text" name="car_color" value="{{ object.car_color }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="car_owner_name">car_owner_name: </label>
-  <input class="form-control col-sm-10" id="car_owner_name" type="text" name="car_owner_name" value="{{ object.car_owner_name }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="reservation_time_per_day">reservation_time_per_day: </label>
-  <input class="form-control col-sm-10" id="reservation_time_per_day" type="text" name="reservation_time_per_day" value="{{ object.reservation_time_per_day }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="owner_mobile_number">owner_mobile_number: </label>
-  <input class="form-control col-sm-10" id="owner_mobile_number" type="text" name="owner_mobile_number" value="{{ object.owner_mobile_number }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="car_model_name">car_model_name: </label>
-  <input class="form-control col-sm-10" id="car_model_name" type="text" name="car_model_name" value="{{ object.car_model_name }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="position_number">position_number: </label>
-  <input class="form-control col-sm-10" id="position_number" type="number" name="position_number" value="{{ object.position_number }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="last_updated">last_updated: </label>
-  <input class="form-control col-sm-10" id="last_updated" type="datetime-local" name="last_updated" value="{{ object.last_updated }}" disabled>
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="car_model_year">car_model_year: </label>
-  <input class="form-control col-sm-10" id="car_model_year" type="number" name="car_model_year" value="{{ object.car_model_year }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="car_registration_no">car_registration_no: </label>
-  <input class="form-control col-sm-10" id="car_registration_no" type="text" name="car_registration_no" value="{{ object.car_registration_no }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="driver_license_number">driver_license_number: </label>
-  <input class="form-control col-sm-10" id="driver_license_number" type="text" name="driver_license_number" value="{{ object.driver_license_number }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="car_plate">car_plate: </label>
-  <input class="form-control col-sm-10" id="car_plate" type="text" name="car_plate" value="{{ object.car_plate }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="car_manufacturer">car_manufacturer: </label>
-  <input class="form-control col-sm-10" id="car_manufacturer" type="text" name="car_manufacturer" value="{{ object.car_manufacturer }}">
-  </div>
-  <div class="form-group row">
-  <label class="col-sm-2 col-form-label" for="car_chassis_no">car_chassis_no: </label>
-  <input class="form-control col-sm-10" id="car_chassis_no" type="text" name="car_chassis_no" value="{{ object.car_chassis_no }}">
-  </div>
-  <input type="submit" value="Save" class="btn btn-primary">
-</form>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-7">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">السجل المدني</span>
+                                                        </div>
+                                                        <input class="form-control" type="text"
+                                                               name="national_identification_number" maxlength="30"
+                                                               required id="id_national_identification_number"
+                                                               placeholder="246891012">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">رقم الرخصة</span>
+                                                        </div>
+                                                        <input class="form-control" type="text"
+                                                               name="driver_license_number" maxlength="30" required
+                                                               id="id_driver_license_number" placeholder="1036254987">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-user fa-2x text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-{% endblock %}
+                    <div class="col-12 mb-2 mt-2">
+                        <div class="card border-left-success  h-100 py-1">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="font-weight-bold text-success text-uppercase mb-1">
+                                            بيانات السيارة
+                                        </div>
+                                        <div class="mt-2 mb-1">
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">الشركة المصنعة</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" name="car_manufacturer"
+                                                           maxlength="30" required id="id_car_manufacturer"
+                                                           placeholder="نيسان">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">اصدار موديل السيارة</span>
+                                                        </div>
+                                                        <input class="form-control" type="number" name="car_model_year"
+                                                           required id="id_car_model_year" placeholder="2021">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">اسم الموديل</span>
+                                                        </div>
+                                                        <input class="form-control" type="text" name="car_model_name"
+                                                           maxlength="30" required id="id_car_model_name"
+                                                           placeholder="ماكسيما">
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                            <div class="form-row">
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">رقم اللوحة</span>
+                                                        </div>
+                                                        <input type="text" class="form-control"
+                                                           name="car_registration_no" maxlength="30" required
+                                                           id="id_car_registration_no" placeholder="ا ل م 1365">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">لون السيارة</span>
+                                                        </div>
+                                                        <input type="text" class="form-control" name="car_color"
+                                                           maxlength="30" required id="id_car_color"
+                                                           placeholder="فضي">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">رقم الشاسيه</span>
+                                                        </div>
+                                                          <input type="text" class="form-control" name="car_chassis_no"
+                                                           maxlength="30" required id="id_car_chassis_no"
+                                                           placeholder="ASD 013625457">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-car fa-2x text-success"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-2 mt-2">
+                        <div class="card border-left-warning  h-100 py-1">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="font-weight-bold text-warning text-uppercase mb-1">
+                                            بيانات الحجز
+                                        </div>
+                                        <div class="mt-2 mb-1">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">ايام الحجز</span>
+                                                        </div>
+                                                         <input type="text" class="form-control"
+                                                           name="reservation_time_per_day" maxlength="30" required
+                                                           id="id_reservation_time_per_day" placeholder="1">
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                       <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">سعر اليوم</span>
+                                                        </div>
+                                                          <input class="form-control" type="number"
+                                                           name="parking_price_per_day" step="0.01" required
+                                                           id="id_parking_price_per_day" placeholder="100 دينار">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-md-4">
+                                                     <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="inputGroupPrepend">رقم حارة الركن</span>
+                                                        </div>
+                                                           <input class="form-control" type="text" name="position_number"
+                                                                  required id="id_position_number" placeholder="12 AB">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-ticket-alt fa-2x text-warning"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center"
+                         style="position: absolute; right: 40%; top: 40%; z-index: 4;">
+                        <div class="spinner-border text-success" role="status"
+                             style="width: 6rem; height: 6rem;  display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">تراجع</button>
+                    <button class="btn btn-primary" type="submit">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

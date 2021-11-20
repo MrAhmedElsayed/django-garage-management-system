@@ -11,7 +11,7 @@ class TicketSerializer(serializers.ModelSerializer):
             "completed",
             "national_identification_number",
             "created",
-            "ticket_total_price",
+            # "ticket_total_price",
             "parking_price_per_day",
             "car_color",
             "car_owner_name",
@@ -23,7 +23,6 @@ class TicketSerializer(serializers.ModelSerializer):
             "car_model_year",
             "car_registration_no",
             "driver_license_number",
-            "car_plate",
             "car_manufacturer",
             "car_chassis_no",
         ]

@@ -2,17 +2,22 @@ from django.urls import path, include
 from rest_framework import routers
 
 from . import api
-from . import views
+from .views import TicketDeleteView, TicketDetailView, TicketUpdateView, home, create_ticket_view
 
 
-router = routers.DefaultRouter()
-router.register("Ticket", api.TicketViewSet)
+# router = routers.DefaultRouter()
+# router.register("Ticket", api.TicketViewSet)
 
 urlpatterns = (
-    path("api/v1/", include(router.urls)),
-    path("garage_app/Ticket/", views.TicketListView.as_view(), name="garage_app_Ticket_list"),
-    path("garage_app/Ticket/create/", views.TicketCreateView.as_view(), name="garage_app_Ticket_create"),
-    path("garage_app/Ticket/detail/<int:pk>/", views.TicketDetailView.as_view(), name="garage_app_Ticket_detail"),
-    path("garage_app/Ticket/update/<int:pk>/", views.TicketUpdateView.as_view(), name="garage_app_Ticket_update"),
-    path("garage_app/Ticket/delete/<int:pk>/", views.TicketDeleteView.as_view(), name="garage_app_Ticket_delete"),
+    # path("api/v1/", include(router.urls)),
+
+    path("create_ticket_view/", create_ticket_view, name="create_ticket_view"),
+
+    path("", home, name="home"),
+
+    path("garage_app/Ticket/create/", create_ticket_view, name="garage_app_Ticket_create"),
+
+    path("garage_app/Ticket/detail/<int:pk>/", TicketDetailView.as_view(), name="garage_app_Ticket_detail"),
+    path("garage_app/Ticket/update/<int:pk>/", TicketUpdateView.as_view(), name="garage_app_Ticket_update"),
+    path("garage_app/Ticket/delete/<int:pk>/", TicketDeleteView.as_view(), name="garage_app_Ticket_delete"),
 )

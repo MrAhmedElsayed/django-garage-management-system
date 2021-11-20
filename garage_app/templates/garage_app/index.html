@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+    <!-- Custom styles for this page -->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">ادارة التذاكر</h1>
+        <button data-toggle="modal" data-target="#createTicketModal"
+           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-plus fa-sm text-white-50"></i> انشاء تذكرة</button>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>المالك</th>
+                        <th>الجوال</th>
+                        <th>السيارة</th>
+                        <th>موديل</th>
+                        <th>رقم اللوحة</th>
+                        <th>المبلغ المطلوب</th>
+                        <th>الحالة</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket.car_owner_name }}</td>
+                            <td>{{ ticket.owner_mobile_number }}</td>
+                            <td>{{ ticket.car_manufacturer }}</td>
+                            <td>{{ ticket.car_model_name }} / {{ ticket.car_model_year }} </td>
+                            <td>{{ ticket.car_registration_no }}</td>
+                            <td>{{ ticket.ticket_total_price }}</td>
+                            <td>{{ ticket.completed }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% include 'garage_app/ticket_form.html' %}
+
+{% endblock %}
+
+
+{% block extra_js %}
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+        function getFormData($form) {
+            let unindexed_array = $form.serializeArray();
+            let indexed_array = {};
+            $.map(unindexed_array, function (n, i) {
+                indexed_array[n['name']] = n['value'];
+            });
+            return indexed_array;
+        }
+        let form = document.getElementById('ticket_form'); // selecting the form
+        form.addEventListener('submit', function (event) { // 1
+            event.preventDefault()
+            let $ticket_form = $("#ticket_form");
+            let ticket_form_data = getFormData($ticket_form);
+            axios({
+                method: 'post',
+                url: {% url 'create_ticket_view' %},
+                data: {
+                    ticket_form_data
+                },
+                headers: {"X-CSRFToken": csrftoken},
+            })
+                .then(res => $('#createTicketModal').modal('hide'))
+                .catch(errors => console.log(errors))
+        })
+    </script>
+
+{% endblock %}
