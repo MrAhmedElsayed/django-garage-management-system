@@ -26,6 +26,7 @@
                         <th>رقم اللوحة</th>
                         <th>المبلغ المطلوب</th>
                         <th>الحالة</th>
+                        <th>العمليات</th>
                     </tr>
                     </thead>
 
@@ -39,6 +40,10 @@
                             <td>{{ ticket.car_registration_no }}</td>
                             <td>{{ ticket.ticket_total_price }}</td>
                             <td>{{ ticket.completed }}</td>
+                            <td>
+                                <button class="btn btn-default"><i class="far fa-edit"></i></button>
+                                <button class="btn btn-default ml-2"><i class="far fa-trash-alt"></i></button>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

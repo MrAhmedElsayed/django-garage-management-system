@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework import routers
 
 from . import api
-from .views import TicketDeleteView, TicketDetailView, TicketUpdateView, home, create_ticket_view
+from .views import TicketDeleteView, TicketDetailView, TicketUpdateView, home, create_ticket_view, ticket_detail
 
 
 # router = routers.DefaultRouter()
@@ -12,6 +12,8 @@ urlpatterns = (
     # path("api/v1/", include(router.urls)),
 
     path("create_ticket_view/", create_ticket_view, name="create_ticket_view"),
+
+    path("ticket_detail/<int:pk>", ticket_detail, name="ticket_detail"),
 
     path("", home, name="home"),
 
