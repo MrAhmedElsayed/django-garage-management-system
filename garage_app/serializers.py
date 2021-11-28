@@ -4,7 +4,6 @@ from . import models
 
 
 class TicketSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Ticket
         fields = [

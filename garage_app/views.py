@@ -1,20 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views import generic
-from django.urls import reverse_lazy
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from .forms import TicketForm
-from .serializers import TicketSerializer
-from .models import Ticket
-from . import forms
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.parsers import JSONParser
+from django.shortcuts import render
 
-"""
-https://www.geeksforgeeks.org/function-based-views-django-rest-framework/"""
+from .models import Ticket
 
 
 @login_required
@@ -22,82 +9,6 @@ def home(request):
     context = dict()
     context["tickets"] = Ticket.objects.all().order_by('created')
     return render(request, template_name='garage_app/index.html', context=context)
-
-
-
-"""
-@api_view(['GET', 'POST'])
-def snippet_list(request):
-    
-    # List all code snippets, or create a new snippet.
-    
-    if request.method == 'GET':
-        snippets = Snippet.objects.all()
-        serializer = SnippetSerializer(snippets, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = SnippetSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-"""
-
-
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def create_ticket_view(request):
-    if request.method == 'POST':
-        serializer = TicketSerializer(data=request.data['ticket_form_data'])
-        if serializer.is_valid():
-            serializer.save(employee=request.user, ticket_total_price=12)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@csrf_exempt
-@api_view(['GET', 'PUT', 'DELETE'])
-def ticket_detail(request, pk):
-    """
-    Retrieve, update or delete a code snippet.
-    """
-    try:
-        ticket = Ticket.objects.get(pk=pk)
-    except Ticket.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = TicketSerializer(ticket)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = TicketSerializer(ticket, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        ticket.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class TicketDetailView(generic.DetailView):
-    model = Ticket
-    form_class = forms.TicketForm
-
-
-class TicketUpdateView(generic.UpdateView):
-    model = Ticket
-    form_class = forms.TicketForm
-    pk_url_kwarg = "pk"
-
-
-class TicketDeleteView(generic.DeleteView):
-    model = Ticket
-    success_url = reverse_lazy("garage_app_Ticket_list")
-
 
 # todo: if you prefer using forms !!
 # def create_ticket_view(request):

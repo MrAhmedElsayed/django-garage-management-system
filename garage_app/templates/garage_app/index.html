@@ -1,16 +1,16 @@
-{% extends "base.html" %}
-{% load static %}
-{% block extra_css %}
+{% extends "base.html" %} {% load static %} {% block extra_css %}
     <!-- Custom styles for this page -->
-    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet"/>
 {% endblock %}
 {% block content %}
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">ادارة التذاكر</h1>
-        <button data-toggle="modal" data-target="#createTicketModal"
-           class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-plus fa-sm text-white-50"></i> انشاء تذكرة</button>
+        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm create-btn"
+                data-req-url="{% url 'ticket_list' %}"
+                data-req-type="POST">
+            <i class="fas fa-plus fa-sm text-white-50"></i> انشاء تذكرة
+        </button>
     </div>
 
     <div class="card shadow mb-4">
@@ -36,13 +36,26 @@
                             <td>{{ ticket.car_owner_name }}</td>
                             <td>{{ ticket.owner_mobile_number }}</td>
                             <td>{{ ticket.car_manufacturer }}</td>
-                            <td>{{ ticket.car_model_name }} / {{ ticket.car_model_year }} </td>
+                            <td>{{ ticket.car_model_name }} / {{ ticket.car_model_year }}</td>
                             <td>{{ ticket.car_registration_no }}</td>
                             <td>{{ ticket.ticket_total_price }}</td>
                             <td>{{ ticket.completed }}</td>
-                            <td>
-                                <button class="btn btn-default"><i class="far fa-edit"></i></button>
-                                <button class="btn btn-default ml-2"><i class="far fa-trash-alt"></i></button>
+                            <td class="text-center">
+                                <button class="btn btn-default btn-sm edit-btn"
+                                        data-url="{% url 'ticket_detail' pk=ticket.pk %}"
+                                        data-type="PUT"
+                                        data-header="{'content-type': 'application/json', 'X-CSRFTOKEN': CSRF_TOKEN}"
+                                        data-request-is-data=true>
+                                    <i class="far fa-edit"></i>
+                                </button>
+                                <button class="btn btn-default btn-sm ml-2 delete-btn"
+                                        data-name="{{ ticket.car_owner_name }} - {{ ticket.car_manufacturer }}"
+                                        data-url="{% url 'ticket_detail' pk=ticket.pk %}"
+                                        data-type="DELETE"
+                                        data-header="{'content-type': 'application/json', 'X-CSRFTOKEN': CSRF_TOKEN}"
+                                        data-request-is-data=false>
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -54,57 +67,44 @@
 
     {% include 'garage_app/ticket_form.html' %}
 
+    <!-- confirm delete modal -->
+    <div
+            class="modal fade"
+            id="confirm-delete-modal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">تأكيد الحذف !</h5>
+                    <button class="close"
+                            type="button"
+                            data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body"></div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                        تراجع
+                    </button>
+                    <button class="btn btn-danger do-delete">حذف</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
-
-
 {% block extra_js %}
-    <!-- Page level plugins -->
+    <script src="{% static 'js/dynamic-crud.js' %}"></script>
+ <!-- Page level plugins -->
     <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
     <!-- Page level custom scripts -->
     <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
-
-    <script>
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        const csrftoken = getCookie('csrftoken');
-        function getFormData($form) {
-            let unindexed_array = $form.serializeArray();
-            let indexed_array = {};
-            $.map(unindexed_array, function (n, i) {
-                indexed_array[n['name']] = n['value'];
-            });
-            return indexed_array;
-        }
-        let form = document.getElementById('ticket_form'); // selecting the form
-        form.addEventListener('submit', function (event) { // 1
-            event.preventDefault()
-            let $ticket_form = $("#ticket_form");
-            let ticket_form_data = getFormData($ticket_form);
-            axios({
-                method: 'post',
-                url: {% url 'create_ticket_view' %},
-                data: {
-                    ticket_form_data
-                },
-                headers: {"X-CSRFToken": csrftoken},
-            })
-                .then(res => $('#createTicketModal').modal('hide'))
-                .catch(errors => console.log(errors))
-        })
-    </script>
-
 {% endblock %}
