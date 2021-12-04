@@ -7,6 +7,7 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Ticket
         fields = [
+            "id",
             "completed",
             "national_identification_number",
             "created",

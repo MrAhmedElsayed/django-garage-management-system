@@ -1,3 +1,7 @@
+from io import BytesIO
+
+import qrcode
+import qrcode.image.svg
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -24,9 +28,19 @@ def ticket_list(request):
 
     elif request.method == 'POST':
         serializer = TicketSerializer(data=request.data)
+
+        factory = qrcode.image.svg.SvgImage
+        img = qrcode.make(request.POST.get("qr_text", ""), image_factory=factory, box_size=20)
+        stream = BytesIO()
+        img.save(stream)
+        svg = stream.getvalue().decode()
+
         if serializer.is_valid():
             # serializer.save()
-            serializer.save(employee=request.user, ticket_total_price=12)
+            # serializer.save(employee=request.user, ticket_total_price=12, qr_code='')
+            my_instance = serializer.save(employee=request.user, ticket_total_price=12, qr_code='')
+            print(my_instance.id)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

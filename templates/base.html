@@ -24,21 +24,21 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
+                <div class="sidebar-brand-icon">
+                    <img src="{% static 'img/parking-svgrepo-com.svg' %}" width="64" height="64" style="fill: #000;" alt="parking icon">
                 </div>
-                <div class="sidebar-brand-text mx-3">Garage <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">جراج النخبة</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'home' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>لوحة التحكم</span></a>
             </li>
 
             <!-- Divider -->
@@ -46,7 +46,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                ادارة التذاكر
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -54,12 +54,12 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>متابعة سير العمل</span>
                 </a>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse {% if request.resolver_match.url_name == 'ticket_management' %}show{% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item active" href="javascript:void(0)">ادارة التذاكر</a>
+                        <h6 class="collapse-header">مدير التذاكر</h6>
+                        <a class="collapse-item {% if request.resolver_match.url_name == 'ticket_management' %}active{% endif %}" href="{% url 'ticket_management' %}">ادارة التذاكر</a> <!-- here -->
                         <a class="collapse-item" href="javascript:void(0)">Cards</a>
                     </div>
                 </div>
@@ -417,6 +417,7 @@
     <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
     <!-- Custom Bootstrap Notifications -->
     <script src="{% static 'js/config_notifications.js' %}"></script>
+
 {% block extra_js %}{% endblock %}
 </body>
 

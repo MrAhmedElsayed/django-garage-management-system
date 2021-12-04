@@ -1,11 +1,22 @@
-
-{% extends "base.html" %}
-{% block content %}
-<form method="post">
-  {% csrf_token %}
-  <p>Are you sure you want to delete "{{ object }}"?</p>
-  <div>
-    <input class="btn btn-danger" value="Delete Ticket" type="submit">
-  </div>
-</form>
-{% endblock %}
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="post" class="ticket-form-body" id="ticket-form-delete">
+        {% csrf_token %}
+        {{ form.errors }}
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header bg-danger text-white d-flex justify-content-center">
+                    <h5 class="modal-title" id="exampleModalLabel">تأكيد الحذف</h5>
+                </div>
+                <div class="modal-body">
+                    <i class="fas fa-trash-alt fa-3x text-danger mb-2"></i>
+                    <p>هل تريد حذف تذكرة محمد علي - سيارة نيسان ماكسيما ؟</p>
+                </div>
+                <div class="modal-footer d-flex justify-content-around">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">لا</button>
+                    <button type="submit" class="btn btn-outline-danger submit-btn">نعم</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

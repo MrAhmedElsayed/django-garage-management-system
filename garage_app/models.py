@@ -37,6 +37,7 @@ class Ticket(Timestamp):
     parking_price_per_day = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='سعر اليوم')
     completed = models.BooleanField(default=False, verbose_name='منتهية')
     position_number = models.CharField(max_length=10, verbose_name='رقم حارة الركن')
+    qr_code = models.CharField(max_length=300, verbose_name='رمز رابط التذكرة')
 
     class Meta:
         pass
