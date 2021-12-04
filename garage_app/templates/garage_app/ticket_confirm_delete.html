@@ -1,5 +1,4 @@
-<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form method="post" class="ticket-form-body" id="ticket-form-delete">
         {% csrf_token %}
         {{ form.errors }}
@@ -10,7 +9,7 @@
                 </div>
                 <div class="modal-body">
                     <i class="fas fa-trash-alt fa-3x text-danger mb-2"></i>
-                    <p>هل تريد حذف تذكرة محمد علي - سيارة نيسان ماكسيما ؟</p>
+                    <p class="delete-message-p"></p>
                 </div>
                 <div class="modal-footer d-flex justify-content-around">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">لا</button>

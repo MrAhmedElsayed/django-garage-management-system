@@ -71,18 +71,18 @@
     {% include 'garage_app/ticket_form.html' %}
     {% include 'garage_app/ticket_confirm_delete.html' %}
 
+    <!-- test qr modal -->
+    {% include 'garage_app/ticket_detail.html' %}
 
 {% endblock %}
-{% block extra_js %}
-    <script src="{% static 'js/dynamic-crud.js' %}"></script>
 
+{% block extra_js %}
+    <!-- ticket crud -->
+    <script src="{% static 'js/dynamic-crud.js' %}"></script>
     <!-- Page level plugins -->
     <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
     <!-- Page level custom scripts -->
     <script src="{% static 'js/demo/datatables-demo.js' %}"></script>
-
-
-
 {% endblock %}
 

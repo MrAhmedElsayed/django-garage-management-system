@@ -1,0 +1,53 @@
+{% load static %}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalPush">
+    Launch demo modal
+</button>
+
+
+<div class="modal fade show" id="modalPush" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+
+
+    <div class="modal-dialog" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center p-1 m-0 mt-2">
+                <p class="heading">من فضلك افحص الكود للحصول علي التذكرة الالكترونية</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+
+                <div class="qr-div p-1 mb-3 d-flex justify-content-center">
+                    <img class="img-fluid" width="50%" src="{% static 'img/qr-code-svgrepo-com.svg' %}" alt="QR CODE">
+                </div>
+
+                <table class="table table-bordered table-success">
+                    
+                    <tbody>
+                      <tr>
+                        <th scope="row">الاسم</th>
+                        <td>احمد السيد احمد</td>
+                        <th scope="row">السيارة</th>
+                        <td>نيسان ماكسيما</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                <div class="alert alert-warning" role="alert">
+                    <i class="fa fa-exclamation-triangle mr-3"></i>
+                    عند فحص العميل الكود سيتم السؤال عن رقم جواله !!
+                </div>
+
+            </div>
+
+            <!--Footer-->
+            <div class="modal-footer flex-center justify-content-around">
+                <a type="button" class="btn btn-outline-info" data-dismiss="modal">تراجع</a>
+                <a href="javascript:void(0)" class="btn btn-info">طباعة التذكرة</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>

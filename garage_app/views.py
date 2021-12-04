@@ -25,21 +25,13 @@ def qr_generator(request):
     """
     https://medium.com/geekculture/how-to-generate-a-qr-code-in-django-e32179d7fdf2
     """
-    print("before post ")
-    if request.method == "POST" and request.is_ajax():
-        print("after post ")
-        if request.POST.get("operation") == "generate_qr":
-            print(request.POST.get("qr_text"))
-            factory = qrcode.image.svg.SvgImage
-            img = qrcode.make(request.POST.get("qr_text", ""), image_factory=factory, box_size=20)
-            stream = BytesIO()
-            img.save(stream)
-
-            svg = stream.getvalue().decode()
-
-            print(svg)
-
-            return JsonResponse({"svg": svg, }, status=200)
+    if request.method == "POST" and request.is_ajax() and request.POST.get("operation") == "generate_qr":
+        factory = qrcode.image.svg.SvgImage
+        img = qrcode.make(request.POST.get("qr_text", ""), image_factory=factory, box_size=20)
+        stream = BytesIO()
+        img.save(stream)
+        svg = stream.getvalue().decode()
+        return JsonResponse({"svg": svg, }, status=200)
     return JsonResponse({"success": False}, status=400)
 
 
